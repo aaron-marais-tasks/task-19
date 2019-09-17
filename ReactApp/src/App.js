@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <Header onSubmit={setupSearch} />
-      {query !== "" ? <Results query={query} /> : null}
+      <Results query={query} />
     </div>
   )
 }

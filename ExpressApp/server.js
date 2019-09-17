@@ -3,49 +3,41 @@ const bodyParser = require('body-parser')
 const cors = require("cors")
 const fetch = require("node-fetch")
 
+const methods = [
+	require("./methods/search.js"),
+	require("./methods/album.js")
+]
+
 const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-app.post("/search", (req, res) => {
-	if(!req.body.query)
-		return res.json({
-			status: 0,
-			reason: "Query missing"
-		})
-
-	const query = encodeURIComponent(req.body.query)
-	fetch(`https://itunes.apple.com/search?term=${query}`)
-		.then(returned => returned.json())
-		.then(result => res.json(result))
+app.use((err, req, res, next) => {
+	res.status(500).json({
+		status: 0,
+		reason: err.message
+	})
 })
 
-app.post("/album", (req, res) => {
-	if(!req.body.id)
-		return res.json({
-			status: 0,
-			reason: "Album ID missing"
-		})
+methods.forEach(method => {
+	const steps = method.query.map((step, key) => {
+		if(key === method.query.length - 1) return step
 
-	console.log(req.headers)
+		return async (req, res, next) => {
+			if(await step(req, res) === true)
+				next()
+		}
+	})
 
-	const entity = req.body.entity || ""
-	fetch(`https://itunes.apple.com/lookup?id=${req.body.id}&entity=${entity}`)
-		.then(returned => returned.json())
-		.then(({results}) => {
-			let album = {}
-			const songs = []
+	const route = app.route(method.path)
+	switch(method.method) {
+		case "POST":
+			route.post(steps)
+			break
 
-			results.forEach(result => {
-				if(result.wrapperType === "collection")
-					return album = {...result}
-
-				songs.push(result)
-			})
-
-			album.songList = songs
-			res.json(album)
-		})
+		case "GET": default:
+			route.get(steps)
+	}
 })
 
 app.listen(8080, () => {

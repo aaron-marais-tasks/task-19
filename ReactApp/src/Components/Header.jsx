@@ -12,7 +12,7 @@ export default props => {
 	return (
 		<header>
 			<form onSubmit={submitForm}>
-				<input type="text" name="search" placeHolder="Search"
+				<input type="text" name="search" placeholder="Search"
 					value={value} onChange={updateInput} />
 			</form>
 		</header>

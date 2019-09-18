@@ -1,40 +1,68 @@
 import styled from "styled-components"
 
-export const Body = styled.div`
-	display: flex;
-	align-items: center;
-	padding: 5px;
-	max-width: calc(100vw - 5px);
-	height: 250px;
-`
-
-export const Entry = styled.div`
-	flex: 0 0 220px;
-
-	> div {
-		max-width: 210px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-
-		&.title {
-			font-weight: 700;
-		}
-
-		&:not(.title) {
-			padding: 0 5px;
-		}
-	}
-`
-
 export const Artwork = styled.div`
 	height: 250px;
-	width: 200px;
-	min-width: 200px;
-	padding-right: 5px;
+	width: 150px;
+	min-width: 150px;
+	overflow: hidden;
+
+	margin: 0 10px;
 
 	background-image: url(${props => props.src});
 	background-size: auto 100%;
 	background-position: center;
 	background-repeat: no-repeat;
+
+	border-radius: 15px !important;
+`
+
+export const Body = styled.div`
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	border-radius: 15px;
+
+	color: rgb(0,0,0);
+	opacity: 0;
+	transition: opacity .2s ease-in-out;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: flex-end;
+		color: white;
+		position: relative;
+		padding: 5px;
+		background-color: rgba(0,0,0,.7);
+		width: calc(100% - 10px);
+		height: calc(100% - 10px);
+
+		.title, .artist {
+			text-align: right;
+			max-width: calc(150px - 10px);
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+	}
+`
+
+export default styled.div`
+	display: flex;
+	width: 100%;
+	overflow-x: auto;
+	scrollbar-width: none;
+	::-webkit-scrollbar {
+		display: none;
+	}
+
+	.buffer {
+		min-width: 10px;
+		min-height: 250px;
+	}
 `

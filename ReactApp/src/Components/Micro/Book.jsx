@@ -1,42 +1,33 @@
 import React from "react"
 
-import * as Book from "../Styled/Micro/Book"
+import BookBody, * as Book from "../Styled/Micro/Book"
 
-export default props => {
+export const Item = props => {
 	const artworkUrl = props.artworkUrl100.split("/")
 	artworkUrl.pop()
 	artworkUrl.push("250x0w.jpg")
 
 	return (
-		<Book.Body>
-			<Book.Artwork src={artworkUrl.join("/")} />
+		<Book.Artwork src={artworkUrl.join("/")}>
+			<Book.Body>
+				<div className="content">
+					<div className="title">
+						{props.trackName}
+					</div>
 
-			<Book.Entry>
-				<div className="title">
-					Book title
+					<div className="artist">
+						{props.artistName}
+					</div>
 				</div>
-				<div>
-					{props.trackName}
-				</div>
-			</Book.Entry>
+			</Book.Body>
+		</Book.Artwork>
+	)
+}
 
-			<Book.Entry>
-				<div className="title">
-					Author
-				</div>
-				<div>
-					{props.artistName}
-				</div>
-			</Book.Entry>
-
-			<Book.Entry>
-				<div className="title">
-					Genre
-				</div>
-				<div>
-					{props.genres[0]}
-				</div>
-			</Book.Entry>
-		</Book.Body>
+export default props => {
+	return (
+		<BookBody>
+			{props.children}
+		</BookBody>
 	)
 }

@@ -8,10 +8,10 @@ const checkup = (req, res) => {
 		throw new Error("Album ID missing")
 
 	req.entities = getEntities(req.body.entities)
-	if(entities === false)
+	if(req.entities === false)
 		throw new Error("Invalid entities type (array of strings required)")
 
-	req.entities = entities
+	return true
 }
 
 const queryAppleApi = async (req, res) => {
@@ -20,7 +20,9 @@ const queryAppleApi = async (req, res) => {
 		entity: req.entities
 	})
 	const request = await fetch(`https://itunes.apple.com/lookup?${query}`)
-	req.returned = await returned.json()
+	req.returned = await request.json()
+
+	return true
 }
 
 const buildResult = (req, res) => {

@@ -1,26 +1,34 @@
 import React from "react"
+import StarRatings from 'react-star-ratings'
 
 import BookBody, * as Book from "../Styled/Micro/Book"
+import {Link} from "react-router-dom"
 
 export const Item = props => {
-	const artworkUrl = props.artworkUrl100.split("/")
-	artworkUrl.pop()
-	artworkUrl.push("250x0w.jpg")
-
 	return (
-		<Book.Artwork src={artworkUrl.join("/")}>
-			<Book.Body>
-				<div className="content">
-					<div className="title">
-						{props.trackName}
-					</div>
+		<Link to={`/book/${props.id}`}>
+			<Book.Artwork src={props.artwork.medium}>
+				<Book.Body>
+					<div className="content">
+						<StarRatings 
+							rating={props.rating.average}
+							starRatedColor="gold"
+							numberOfStars={5}
+						    starDimension="15px"
+							starSpacing="2px"
+						/>
 
-					<div className="artist">
-						{props.artistName}
+						<div className="title">
+							{props.title}
+						</div>
+
+						<div className="artist">
+							{props.author.name}
+						</div>
 					</div>
-				</div>
-			</Book.Body>
-		</Book.Artwork>
+				</Book.Body>
+			</Book.Artwork>
+		</Link>
 	)
 }
 

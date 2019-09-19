@@ -1,9 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React from "react"
 
-import Song from "./Micro/Song"
+import Container, * as Album from "./Styled/Album.jsx"
+
+import Disc from "./Micro/Album/Disc"
 
 export default props => {
-	const [results, updateResults] = React.useState(null)
+	const [album, updateResults] = React.useState(null)
 	const [status, setStatus] = React.useState(-1)
 
 	React.useEffect(() => {
@@ -34,39 +38,42 @@ export default props => {
 	if(!props.match.params.id)
 		props.history.push("/")
 
-	if(results === null) return null
+	if(album === null) return null
 	if(![-1, 1].includes(status))
 		return (
 			<div>
-				{results}
+				{album}
 			</div>
 		)
 
-	const artworkUrl = results.artworkUrl100.split("/")
-	artworkUrl.pop()
-	artworkUrl.push("320x0w.jpg")
-
-	console.log(results)
+	const discs = []
+	for(let count = 1; count <= album.discs; count++) {
+		discs.push(album.songList.filter(song => song.disc === count))
+	}
 
 	return (
-		<div>
-			<div>
-				<img src={artworkUrl.join("/")} />
+		<Container>
+			<Album.Info>
+				<div className="albumArt">
+					<img src={album.artwork.medium} alt="Album artwork" />
+				</div>
 				
-				<div className="albumTitle">
-					{results.collectionName}
-				</div>
+				<Album.Info.Text>
+					<div className="albumTitle">
+						{album.title}
+					</div>
 
-				<div className="artistName">
-					{results.artistName}
-				</div>
-			</div>
+					<div className="artistName">
+						{album.artist.name}
+					</div>
+				</Album.Info.Text>
+			</Album.Info>
 
 			<div>
-				{results.songList.map((item, key) => 
-					<Song key={key} request={["title"]} {...item} />
+				{discs.map((disc, discNumber) => 
+					<Disc number={discNumber + 1} tracks={disc} />
 				)}
 			</div>
-		</div>
+		</Container>
 	)
 }

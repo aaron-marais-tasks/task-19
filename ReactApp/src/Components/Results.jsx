@@ -6,7 +6,8 @@ import Song from "./Micro/Song"
 import BookBody, {Item as BookItem} from "./Micro/Book"
 
 export default props => {
-	if(props.query === "") {
+	const query = props.match.params.query
+	if(query === "") {
 		props.history.push("/")
 	}
 
@@ -16,7 +17,7 @@ export default props => {
 	const [ebooks, setEbooks] = React.useState([])
 
 	React.useEffect(() => {
-		if(props.query === "") return
+		if(query === "") return
 
 		fetch("http://localhost:8080/search", {
 			method: "post",
@@ -24,7 +25,7 @@ export default props => {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-				query: props.query,
+				query: query,
 				entities: ["song", "ebook"]
 			})
 		})
@@ -38,21 +39,17 @@ export default props => {
 			setStatus(err.status)
 			updateResults(err.reason)
 		})
-	}, [props.query])
+	}, [props.match.params.query])
 
 	React.useEffect(() => {
-		if(songs.length === 0 && results !== null) {
+		if(results !== null && typeof results !== "string") {
 			setSongs(
-				results
-				.filter(item => item.kind === "song")
-				.filter((item, index) => index < 25)
+				results.song.filter((item, index) => index < 25)
 			)
-			setEbooks(results.filter(item => item.kind === "ebook"))
 		}
 	}, [results])
 
-	if(results === null || !props.query) return null
-
+	if(results === null || !query) return null
 	if(![-1, 1].includes(status)) {
 		return (
 			<div>
@@ -63,24 +60,23 @@ export default props => {
 
 	const showMoreSongs = () => {
 		setSongs(
-			results
-			.filter(item => item.kind === "song")
-			.filter((item, index) => index < songs.length + 25)
+			results.song.filter((item, index) => index < songs.length + 25)
 		)
 	}
 
-	console.log(results)
 	return (
 		<React.Fragment>
 			<div>
 				{songs.map((item, key) => <Song key={key} {...item} />)}
-				{songs.length < results.length - ebooks.length - 1 && <div onClick={showMoreSongs}>Show More</div>}
+				{songs.length < results.song.length - 1 && <div onClick={showMoreSongs}>Show More</div>}
 			</div>
-			<BookBody>
-				<div className="buffer" />
-				{ebooks.map((item, key) => <BookItem {...item} />)}
-				<div className="buffer" />
-			</BookBody>
+			{results.ebook && (
+				<BookBody>
+					<div className="buffer" />
+					{results.ebook.map((item, key) => <BookItem {...item} />)}
+					<div className="buffer" />
+				</BookBody>
+			)}
 		</React.Fragment>
 	)
 }

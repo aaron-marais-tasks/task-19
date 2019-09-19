@@ -3,15 +3,13 @@ import React from 'react'
 import Header from "./Components/Header"
 import Results from "./Components/Results"
 import Album from "./Components/Album"
+import Book from "./Components/Book"
 
 import { Route, Switch, withRouter } from "react-router-dom"
 
 function App(props) {
-  const [query, setQuery] = React.useState("")
-
   const setupSearch = value => {
-    setQuery(value)
-    props.history.push("/search")
+    props.history.push(`/search/${encodeURIComponent(value)}`)
   }
 
   return (
@@ -19,8 +17,9 @@ function App(props) {
       <Header onSubmit={setupSearch} />
 
       <Switch>
-        <Route path="/search" render={props => <Results {...props} query={query} />} />
-        <Route path="/album/:id" render={props => <Album {...props} />} />
+        <Route path="/search/:query" component={Results} />
+        <Route path="/album/:id" component={Album} />
+        <Route path="/book/:id" component={Book} />
       </Switch>
     </div>
   )

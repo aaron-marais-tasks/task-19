@@ -1,5 +1,7 @@
 import React from "react"
 
+import Container from "./Styled/Header"
+
 export default props => {
 	const [value, inputValue] = React.useState("")
 
@@ -10,11 +12,11 @@ export default props => {
 	}
 
 	return (
-		<header>
+		<Container>
 			<form onSubmit={submitForm}>
 				<input type="text" name="search" placeholder="Search"
 					value={value} onChange={updateInput} />
 			</form>
-		</header>
+		</Container>
 	)
 }

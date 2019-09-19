@@ -5,10 +5,14 @@ import { Link } from "react-router-dom"
 
 export default props => {
 	const generateUsing = attrList => {
+		if(!attrList) {
+			attrList = ["art", "title", "artist", "collection"]
+		}
+
 		const items = []
 
 		if(attrList.includes("art"))
-			items.push(<Song.Artwork src={props.artworkUrl100} />)
+			items.push(<Song.Artwork src={props.artwork.extraSmall} />)
 
 		if(attrList.includes("title"))
 			items.push(
@@ -17,7 +21,7 @@ export default props => {
 						Track name
 					</div>
 					<div>
-						{props.trackName}
+						{props.title}
 					</div>
 				</Song.Entry>
 			)
@@ -29,7 +33,7 @@ export default props => {
 						Artist
 					</div>
 					<div>
-						{props.artistName}
+						{props.artist.name}
 					</div>
 				</Song.Entry>
 			)
@@ -41,7 +45,9 @@ export default props => {
 						Collection
 					</div>
 					<div>
-						<Link to={`/album/${props.collectionId}`}>{props.collectionName}</Link>
+						<Link to={`/album/${props.album.id}`}>
+							{props.album.name}
+						</Link>
 					</div>
 				</Song.Entry>
 			)

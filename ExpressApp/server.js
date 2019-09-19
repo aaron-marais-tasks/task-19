@@ -5,7 +5,8 @@ const fetch = require("node-fetch")
 
 const methods = [
 	require("./methods/search.js"),
-	require("./methods/album.js")
+	require("./methods/album.js"),
+	require("./methods/book.js")
 ]
 
 const app = express()

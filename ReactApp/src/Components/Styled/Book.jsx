@@ -111,5 +111,14 @@ export default styled.div`
 			height: auto;
 			margin-bottom: 20px;
 		}
+
+		.genres {
+			align-self: flex-start;
+			margin: 0 25px;
+
+			> div:before {
+				content: "- ";
+			}
+		}
 	}
 `

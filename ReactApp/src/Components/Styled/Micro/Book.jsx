@@ -14,6 +14,10 @@ export const Artwork = styled.div`
 	background-repeat: no-repeat;
 
 	border-radius: 15px !important;
+
+	> a {
+		text-decoration: none !important;
+	}
 `
 
 export const Body = styled.div`
@@ -54,8 +58,10 @@ export const Body = styled.div`
 
 export default styled.div`
 	display: flex;
-	width: 100%;
+	width: 60%;
+	margin: 0 20% 25px 20%;
 	overflow-x: auto;
+	
 	scrollbar-width: none;
 	::-webkit-scrollbar {
 		display: none;

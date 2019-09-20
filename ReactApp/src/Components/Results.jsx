@@ -2,8 +2,8 @@
 
 import React from "react"
 
-import Song from "./Micro/Song"
-import BookBody, {Item as BookItem} from "./Micro/Book"
+import SongList from "./Micro/Results/SongList"
+import BookBody from "./Micro/Book"
 
 export default props => {
 	const query = props.match.params.query
@@ -13,13 +13,11 @@ export default props => {
 
 	const [status, setStatus] = React.useState(-1)
 	const [results, updateResults] = React.useState(null)
-	const [songs, setSongs] = React.useState([])
-	const [ebooks, setEbooks] = React.useState([])
 
 	React.useEffect(() => {
 		if(query === "") return
 
-		fetch("http://localhost:8080/search", {
+		fetch("/api/search", {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json"
@@ -41,14 +39,6 @@ export default props => {
 		})
 	}, [props.match.params.query])
 
-	React.useEffect(() => {
-		if(results !== null && typeof results !== "string") {
-			setSongs(
-				results.song.filter((item, index) => index < 25)
-			)
-		}
-	}, [results])
-
 	if(results === null || !query) return null
 	if(![-1, 1].includes(status)) {
 		return (
@@ -58,25 +48,10 @@ export default props => {
 		)
 	}
 
-	const showMoreSongs = () => {
-		setSongs(
-			results.song.filter((item, index) => index < songs.length + 25)
-		)
-	}
-
 	return (
 		<React.Fragment>
-			<div>
-				{songs.map((item, key) => <Song key={key} {...item} />)}
-				{songs.length < results.song.length - 1 && <div onClick={showMoreSongs}>Show More</div>}
-			</div>
-			{results.ebook && (
-				<BookBody>
-					<div className="buffer" />
-					{results.ebook.map((item, key) => <BookItem {...item} />)}
-					<div className="buffer" />
-				</BookBody>
-			)}
+			<SongList songs={results.song} />
+			<BookBody ebooks={results.ebook} />
 		</React.Fragment>
 	)
 }

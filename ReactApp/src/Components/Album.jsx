@@ -13,7 +13,7 @@ export default props => {
 	React.useEffect(() => {
 		if(!props.match.params.id) return
 
-		fetch("http://localhost:8080/album", {
+		fetch("/api/album", {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json"

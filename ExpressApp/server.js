@@ -1,6 +1,5 @@
 const express = require("express")
 const bodyParser = require('body-parser')
-const cors = require("cors")
 const fetch = require("node-fetch")
 
 const methods = [
@@ -10,8 +9,6 @@ const methods = [
 ]
 
 const app = express()
-app.use(bodyParser.json())
-app.use(cors())
 
 app.use((err, req, res, next) => {
 	res.status(500).json({
@@ -19,6 +16,11 @@ app.use((err, req, res, next) => {
 		reason: err.message
 	})
 })
+
+const route = express.Router()
+route.use(bodyParser.json())
+
+app.use("/api", route)
 
 methods.forEach(method => {
 	const steps = method.query.map((step, key) => {
@@ -30,14 +32,13 @@ methods.forEach(method => {
 		}
 	})
 
-	const route = app.route(method.path)
 	switch(method.method) {
 		case "POST":
-			route.post(steps)
+			route.post(method.path, steps)
 			break
 
 		case "GET": default:
-			route.get(steps)
+			route.get(method.path, steps)
 	}
 })
 

@@ -14,7 +14,7 @@ export default props => {
 	React.useEffect(() => {
 		if(!props.match.params.id) return
 
-		fetch("http://localhost:8080/book", {
+		fetch("/api/book", {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json"
@@ -45,8 +45,6 @@ export default props => {
 			</div>
 		)
 
-	console.log(results)
-
 	const book = results
 	const released = new Date(book.released)
 	return (
@@ -56,7 +54,8 @@ export default props => {
 
 				<StarRatings 
 					rating={book.rating.average}
-					starRatedColor="blue"
+					starRatedColor="gold"
+					starEmptyColor="lightblue"
 					numberOfStars={5}
 			        starDimension="30px"
         			starSpacing="5px"
@@ -64,6 +63,15 @@ export default props => {
 
 				<div>
 					{released.toDateString()}
+				</div>
+
+				<div className="genres">
+					Genres:
+					{book.genres.map((genre, id) =>
+						<div>
+							{genre.name}
+						</div>
+					)}
 				</div>
 			</div>
 

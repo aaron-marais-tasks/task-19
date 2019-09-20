@@ -39,7 +39,9 @@ const buildResult = (req, res) => {
 		book: {
 			title: book.trackName,
 			description: book.description,
-			genres: book.genres,
+			genres: book.genres.map((name, index) => ({
+				id: book.genreIds[index], name
+			})),
 			released: book.releaseDate,
 			rating: {
 				average: book.averageUserRating,

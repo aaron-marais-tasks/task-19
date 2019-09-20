@@ -48,15 +48,24 @@ export const Disc = styled.div`
 		cursor: pointer;
 		border-bottom: dashed 2px rgba(0,0,0,.4);
 
-		> .disc {
-			font-size: 26px;
-			&:before {
-				content: "Disc #";
-				font-size: 22px;
+		.firstGroup {
+			display: flex;
+			align-items: center;
+
+			.toggle {
+				margin-right: 10px;
+			}
+
+			.disc {
+				font-size: 26px;
+				&:before {
+					content: "Disc #";
+					font-size: 22px;
+				}
 			}
 		}
 
-		> .tracks {
+		.tracks {
 			font-size: 26px;
 
 			&:after {

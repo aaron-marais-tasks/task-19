@@ -6,8 +6,8 @@ import {Link} from "react-router-dom"
 
 export const Item = props => {
 	return (
-		<Link to={`/book/${props.id}`}>
-			<Book.Artwork src={props.artwork.medium}>
+		<Book.Artwork src={props.artwork.medium}>
+			<Link to={`/book/${props.id}`}>
 				<Book.Body>
 					<div className="content">
 						<StarRatings 
@@ -27,15 +27,21 @@ export const Item = props => {
 						</div>
 					</div>
 				</Book.Body>
-			</Book.Artwork>
-		</Link>
+			</Link>
+		</Book.Artwork>
 	)
 }
 
 export default props => {
+	if(!props.ebooks) return null
+
 	return (
 		<BookBody>
-			{props.children}
+			<div className="buffer" />
+			{props.ebooks.map((item, key) =>
+				<Item key={key} {...item} />
+			)}
+			<div className="buffer" />
 		</BookBody>
 	)
 }

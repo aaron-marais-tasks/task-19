@@ -12,11 +12,11 @@ export default props => {
 		const items = []
 
 		if(attrList.includes("art"))
-			items.push(<Song.Artwork src={props.artwork.extraSmall} />)
+			items.push(<Song.Artwork key={1} src={props.artwork.extraSmall} />)
 
 		if(attrList.includes("title"))
 			items.push(
-				<Song.Entry>
+				<Song.Entry key={2}>
 					<div className="title">
 						Track name
 					</div>
@@ -28,7 +28,7 @@ export default props => {
 
 		if(attrList.includes("artist"))
 			items.push(
-				<Song.Entry>
+				<Song.Entry key={3}>
 					<div className="title">
 						Artist
 					</div>
@@ -40,7 +40,7 @@ export default props => {
 
 		if(attrList.includes("collection"))
 			items.push(
-				<Song.Entry>
+				<Song.Entry key={4}>
 					<div className="title">
 						Collection
 					</div>

@@ -8,26 +8,26 @@ import BookBody from "./Micro/Book"
 import * as api from "../queryApi"
 
 export default props => {
-	const query = props.match.params.query
-	if(query === "") {
-		props.history.push("/")
-	}
-
 	const [status, setStatus] = React.useState(-1)
 	const [results, updateResults] = React.useState(null)
 
 	React.useEffect(() => {
-		if(query === "") return
+		let promise
+		if(props.favorites)
+			promise = api.favorite.list()
+		else
+			promise = api.search(props.match.params.query)
 
-		api.search(query)
-		.then(res => updateResults(res.items))
+		promise.then(res => updateResults(res.items))
 		.catch(err => {
 			setStatus(err.status)
 			updateResults(err.reason)
 		})
-	}, [props.match.params.query])
+	}, props.favorites ? [] : [props.match.params.query])
 
-	if(results === null || !query) return null
+	if(props.favorites ? results === null : (
+		results === null || (!props.match.params.query)
+	)) return null
 	if(![-1, 1].includes(status)) {
 		return (
 			<div>

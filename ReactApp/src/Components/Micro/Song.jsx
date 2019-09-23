@@ -1,9 +1,24 @@
 import React from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import * as Song from "../Styled/Micro/Song"
 import { Link } from "react-router-dom"
 
+import * as api from "../../queryApi.js"
+
 export default props => {
+	const [isFavorite, setFavorite] = React.useState(props.favorite)
+	const toggleFavorite = e => {
+		e.stopPropagation()
+		setFavorite(!isFavorite)
+
+		if(isFavorite) {
+			api.favorite.remove(props.id)
+		} else {
+			api.favorite.add(props.id)
+		}
+	}
+
 	const generateUsing = attrList => {
 		if(!attrList) {
 			attrList = ["art", "title", "artist", "collection"]
@@ -58,6 +73,16 @@ export default props => {
 	return (
 		<Song.Body>
 			{generateUsing(props.request)}
+
+			<Song.Entry>
+				<div className="title">
+					Favorite song
+				</div>
+				<div>
+					<FontAwesomeIcon icon="heart" onClick={toggleFavorite}
+						className={isFavorite ? "favorite" : ""} />
+				</div>
+			</Song.Entry>
 		</Song.Body>
 	)
 }

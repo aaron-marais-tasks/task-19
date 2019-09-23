@@ -21,6 +21,15 @@ export const Head = styled.div`
 			font-style: italic;
 		}
 	}
+
+	.fa-heart {
+		cursor: pointer;
+		z-index: 5;
+
+		&:hover, &.favorite {
+			color: rgb(255,25,25);
+		}
+	}
 `
 
 export const Description = styled.div`

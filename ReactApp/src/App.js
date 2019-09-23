@@ -7,6 +7,7 @@ import Footer from "./Components/Footer"
 import FourOhFour from "./Components/FourOhFour"
 
 import Index from "./Components/Index"
+import Favorites from "./Components/Favorites"
 import Results from "./Components/Results"
 import Album from "./Components/Album"
 import Book from "./Components/Book"
@@ -14,20 +15,30 @@ import Book from "./Components/Book"
 import { Route, Switch, withRouter } from "react-router-dom"
 
 function App(props) {
+  const [searchValue, updateSearchValue] = React.useState("")
+
+  console.log(props.location)
+
   const setupSearch = value => {
+    updateSearchValue(value)
     props.history.push(`/search/${encodeURIComponent(value)}`)
   }
 
   return (
     <div className="App">
-      <Header onSubmit={setupSearch} />
+      <Route path={["/search/:query", "/"]}
+        render={props =>
+          <Header {...props} onSubmit={setupSearch} value={searchValue} />
+        }
+      />
 
       <section className="body">
         <Switch>
+          <Route path="/favorites" component={Favorites} />
           <Route path="/search/:query" component={Results} />
           <Route path="/album/:id" component={Album} />
           <Route path="/book/:id" component={Book} />
-          <Route path="/" component={Index} />
+          <Route path="/" render={() => <Index onSubmit={setupSearch} />} />
           <Route component={FourOhFour} />
         </Switch>
       </section>

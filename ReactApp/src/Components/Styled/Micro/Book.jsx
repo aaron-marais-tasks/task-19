@@ -5,6 +5,7 @@ export const Artwork = styled.div`
 	width: 150px;
 	min-width: 150px;
 	overflow: hidden;
+	position: relative;
 
 	margin: 0 10px;
 
@@ -17,6 +18,19 @@ export const Artwork = styled.div`
 
 	> a {
 		text-decoration: none !important;
+	}
+
+	.fa-heart {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		color: rgb(255,255,255);
+		cursor: pointer;
+		z-index: 5;
+
+		&:hover, &.favorite {
+			color: rgb(255,25,25);
+		}
 	}
 `
 
@@ -40,7 +54,6 @@ export const Body = styled.div`
 		justify-content: flex-end;
 		align-items: flex-end;
 		color: white;
-		position: relative;
 		padding: 5px;
 		background-color: rgba(0,0,0,.7);
 		width: calc(100% - 10px);

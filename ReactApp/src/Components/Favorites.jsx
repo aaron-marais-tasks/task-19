@@ -8,26 +8,20 @@ import BookBody from "./Micro/Book"
 import * as api from "../queryApi"
 
 export default props => {
-	const query = props.match.params.query
-	if(query === "") {
-		props.history.push("/")
-	}
-
 	const [status, setStatus] = React.useState(-1)
 	const [results, updateResults] = React.useState(null)
 
 	React.useEffect(() => {
-		if(query === "") return
-
-		api.search(query)
+		api.favorite.list()
 		.then(res => updateResults(res.items))
 		.catch(err => {
+			console.log(err)
 			setStatus(err.status)
 			updateResults(err.reason)
 		})
-	}, [props.match.params.query])
+	}, [])
 
-	if(results === null || !query) return null
+	if(results === null) return null
 	if(![-1, 1].includes(status)) {
 		return (
 			<div>
@@ -39,7 +33,7 @@ export default props => {
 	if(!results.song && !results.ebook) {
 		return (
 			<React.Fragment>
-				No results found
+				No favorites found
 			</React.Fragment>
 		)
 	}

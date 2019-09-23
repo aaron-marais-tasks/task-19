@@ -7,7 +7,7 @@ const HoverFrames = keyframes`
 `
 
 export const SongList = styled.div`
-	:last-item {
+	> :last-child {
 		margin-bottom: 25px;
 	}
 

@@ -1,7 +1,7 @@
 const queryString = require("querystring")
 const fetch = require("node-fetch")
 
-const { getEntities } = require("./helpers")
+const { getEntities, requireUncached } = require("./helpers")
 
 const checkup = (req, res) => {
 	if(!req.body.query)
@@ -35,6 +35,11 @@ const queryAppleApi = async (req, res) => {
 	return true
 }
 
+const getFavorites = (req, res) => {
+	res.favorites = requireUncached("../favorites.json")
+	return true
+}
+
 const buildResult = (req, res) => {
 	const {results} = res.result
 	const items = results.map(item => {
@@ -51,6 +56,7 @@ const buildResult = (req, res) => {
 			case "song":
 				return {
 					id: item.trackId,
+					favorite: res.favorites.includes(item.trackId),
 					kind: item.kind,
 					title: item.trackName,
 					genre: item.primaryGenre,
@@ -79,6 +85,7 @@ const buildResult = (req, res) => {
 			case "ebook":
 				return {
 					id: item.trackId,
+					favorite: res.favorites.includes(item.trackId),
 					kind: item.kind,
 					title: item.trackName,
 					description: item.description,
@@ -123,5 +130,6 @@ exports.method = "POST"
 exports.query = [
 	checkup,
 	queryAppleApi,
+	getFavorites,
 	buildResult
 ]

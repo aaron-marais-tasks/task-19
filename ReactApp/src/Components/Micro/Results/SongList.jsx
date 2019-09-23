@@ -10,6 +10,8 @@ export default props => {
 	
 	const songsByArtist = []
 
+	if(!props.songs) return null
+
 	// eslint-disable-next-line
 	for(const song of props.songs) {
 		let artistList = songsByArtist.filter(artist => artist.name === song.artist.name)

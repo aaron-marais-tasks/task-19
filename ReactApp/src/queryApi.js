@@ -6,13 +6,14 @@ const VERIFY_RESULT = item => {
 	throw item
 }
 
-export const fetchItem = (apiPath, body) =>
+export const fetchItem = (apiPath, body, opts={}) =>
 	fetch(`${API_PREFIX}/${apiPath}`, {
 		method: "post",
 		headers: {
 			"Content-Type": "application/json"
 		},
-		body: JSON.stringify(body)
+		body: JSON.stringify(body),
+		...opts
 	})
 
 export const search = query =>
@@ -37,3 +38,27 @@ export const album = id =>
 	})
 	.then(TO_JSON)
 	.then(VERIFY_RESULT)
+
+export const favorite = (id, opts={}) =>
+	fetchItem("favorite", {
+		id
+	}, opts)
+
+favorite.add = id =>
+	favorite(id, {
+		method: "POST"
+	})
+
+favorite.list = () => {
+	return favorite(null, {
+		method: "GET",
+		body: null
+	})
+	.then(TO_JSON)
+	.then(VERIFY_RESULT)
+}
+
+favorite.remove = id =>
+	favorite(id, {
+		method: "DELETE"
+	})

@@ -11,6 +11,15 @@ export const Body = styled.div`
 export const Entry = styled.div`
 	flex: 0 0 220px;
 
+	.fa-heart {
+		cursor: pointer;
+		z-index: 5;
+
+		&:hover, &.favorite {
+			color: rgb(255,25,25);
+		}
+	}
+
 	> div {
 		max-width: 210px;
 		white-space: nowrap;

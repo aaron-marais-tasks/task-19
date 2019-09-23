@@ -1,14 +1,33 @@
 import React from "react"
 import StarRatings from 'react-star-ratings'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import BookBody, * as Book from "../Styled/Micro/Book"
 import {Link} from "react-router-dom"
 
+import * as api from "../../queryApi.js"
+
 export const Item = props => {
+	const [isFavorite, setFavorite] = React.useState(typeof props.favorite === "boolean" ? props.favorite : false)
+
+	const toggleFavorite = e => {
+		e.stopPropagation()
+		setFavorite(!isFavorite)
+
+		if(isFavorite) {
+			api.favorite.remove(props.id)
+		} else {
+			api.favorite.add(props.id)
+		}
+	}
+
 	return (
 		<Book.Artwork src={props.artwork.medium}>
-			<Link to={`/book/${props.id}`}>
-				<Book.Body>
+			<Book.Body>
+				<FontAwesomeIcon className={isFavorite ? "favorite" : ""} icon="heart"
+					onClick={toggleFavorite} />
+
+				<Link to={`/book/${props.id}`}>
 					<div className="content">
 						<StarRatings 
 							rating={props.rating.average}
@@ -26,8 +45,8 @@ export const Item = props => {
 							{props.author.name}
 						</div>
 					</div>
-				</Book.Body>
-			</Link>
+				</Link>
+			</Book.Body>
 		</Book.Artwork>
 	)
 }

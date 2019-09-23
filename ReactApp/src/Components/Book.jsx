@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import React from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import parseHtml from 'html-react-parser'
 import StarRatings from 'react-star-ratings'
 import {Link} from "react-router-dom"
@@ -12,6 +12,7 @@ import * as api from "../queryApi"
 export default props => {
 	const [results, updateResults] = React.useState(null)
 	const [status, setStatus] = React.useState(-1)
+	const [isFavorite, setFavorite] = React.useState(props.favorite)
 
 	React.useEffect(() => {
 		if(!props.match.params.id) return
@@ -32,6 +33,17 @@ export default props => {
 				<Link to="/">Back home</Link>
 			</div>
 		)
+
+	const toggleFavorite = e => {
+		e.stopPropagation()
+		setFavorite(!isFavorite)
+
+		if(isFavorite) {
+			api.favorite.remove(props.id)
+		} else {
+			api.favorite.add(props.id)
+		}
+	}
 
 	const book = results
 	const released = new Date(book.released)
@@ -72,6 +84,9 @@ export default props => {
 					<div className="authorName">
 						{book.author.name}
 					</div>
+
+					<FontAwesomeIcon icon="heart" onClick={toggleFavorite}
+						className={isFavorite ? "" : "favorite"} />
 				</Book.Head>
 
 				<Book.Description>

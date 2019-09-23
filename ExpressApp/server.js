@@ -3,6 +3,9 @@ const bodyParser = require('body-parser')
 const fetch = require("node-fetch")
 
 const methods = [
+	require("./methods/favorite.get.js"),
+	require("./methods/favorite.post.js"),
+	require("./methods/favorite.delete.js"),
 	require("./methods/search.js"),
 	require("./methods/album.js"),
 	require("./methods/book.js")
@@ -23,16 +26,24 @@ route.use(bodyParser.json())
 app.use("/api", route)
 
 methods.forEach(method => {
-	const steps = method.query.map((step, key) => {
-		if(key === method.query.length - 1) return step
+	const steps = !Array.isArray(method.query) ?
+		method.query :
+		method.query.map((step, key) => {
+			if(key === method.query.length - 1) return step
 
-		return async (req, res, next) => {
-			if(await step(req, res) === true)
-				next()
-		}
-	})
+			return async (req, res, next) => {
+				const pass = await step(req, res)
+				if(pass === true)
+					next()
+			}
+
+		})
 
 	switch(method.method) {
+		case "DELETE":
+			route.delete(method.path, steps)
+			break
+
 		case "POST":
 			route.post(method.path, steps)
 			break

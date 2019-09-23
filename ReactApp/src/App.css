@@ -12,3 +12,16 @@
   flex: 1;
   margin: 15px 5px;
 }
+
+.fa-heart, .fa-apple {
+  color: black;
+  transition: color .2s ease-in-out;
+}
+
+.fa-heart:hover {
+  color: hotpink;
+}
+
+.fa-apple:hover {
+  color: grey;
+}

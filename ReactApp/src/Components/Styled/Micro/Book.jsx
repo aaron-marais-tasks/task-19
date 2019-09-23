@@ -58,13 +58,14 @@ export const Body = styled.div`
 
 export default styled.div`
 	display: flex;
-	width: 60%;
-	margin: 0 20% 25px 20%;
+	margin: 0 0 25px 0;
 	overflow-x: auto;
 	
-	scrollbar-width: none;
-	::-webkit-scrollbar {
-		display: none;
+	@media (pointer: coarse) {
+		scrollbar-width: none;
+		::-webkit-scrollbar {
+			display: none;
+		}
 	}
 
 	.buffer {

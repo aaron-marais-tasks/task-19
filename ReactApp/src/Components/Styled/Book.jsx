@@ -92,10 +92,6 @@ export const Reviews = styled.div`
 export default styled.div`
 	display: flex;
 
-	max-height: 95vh;
-	width: 80vw;
-	margin: 0 10vw;
-
 	> .leftBar {
 		width: 320px;
 

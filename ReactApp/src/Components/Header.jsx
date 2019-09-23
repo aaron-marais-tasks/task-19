@@ -1,6 +1,6 @@
 import React from "react"
 
-import Container from "./Styled/Header"
+import Container, * as Header from "./Styled/Header"
 
 export default props => {
 	const [value, inputValue] = React.useState("")
@@ -13,10 +13,19 @@ export default props => {
 
 	return (
 		<Container>
-			<form onSubmit={submitForm}>
-				<input type="text" name="search" placeholder="Search"
-					value={value} onChange={updateInput} />
-			</form>
+			<Header.SiteIndex>
+
+			</Header.SiteIndex>
+
+			<Header.SiteSearch>
+				<form onSubmit={submitForm}>
+					<input type="text" name="search" placeholder="Search"
+						value={value} onChange={updateInput} />
+					<button type="submit">
+						<div className="content">⚲</div>
+					</button>
+				</form>
+			</Header.SiteSearch>
 		</Container>
 	)
 }

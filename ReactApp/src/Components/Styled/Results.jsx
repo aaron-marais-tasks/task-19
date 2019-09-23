@@ -16,8 +16,7 @@ export const SongList = styled.div`
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		width: 60%;
-		margin: 35px 20%;
+		margin: 35px 0;
 		font-size: 26px;
 
 		svg {
@@ -35,10 +34,9 @@ export const SongList = styled.div`
 `
 
 export const AuthorGroup = styled.div`
-	width: 60%;
-	margin: 0 20%;
-
-	margin-top: 25px;
+	&:not(:first-child) {
+		margin-top: 25px;
+	}
 
 	> .head {
 		display: flex;

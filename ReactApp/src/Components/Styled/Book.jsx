@@ -91,7 +91,6 @@ export const Reviews = styled.div`
 
 export default styled.div`
 	display: flex;
-	flex: 1;
 
 	max-height: 95vh;
 	width: 80vw;

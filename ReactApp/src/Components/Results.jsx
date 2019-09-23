@@ -5,6 +5,8 @@ import React from "react"
 import SongList from "./Micro/Results/SongList"
 import BookBody from "./Micro/Book"
 
+import * as api from "../queryApi"
+
 export default props => {
 	const query = props.match.params.query
 	if(query === "") {
@@ -17,21 +19,7 @@ export default props => {
 	React.useEffect(() => {
 		if(query === "") return
 
-		fetch("/api/search", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				query: query,
-				entities: ["song", "ebook"]
-			})
-		})
-		.then(res => res.json())
-		.then(res => {
-			if(res.status === 1) return res
-			throw res
-		})
+		api.search(query)
 		.then(res => updateResults(res.items))
 		.catch(err => {
 			setStatus(err.status)

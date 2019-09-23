@@ -2,9 +2,12 @@
 
 import React from "react"
 
-import Container, * as Album from "./Styled/Album.jsx"
-
+import * as Album from "./Styled/Album.jsx"
 import Disc from "./Micro/Album/Disc"
+
+import {Link} from "react-router-dom"
+
+import * as api from "../queryApi"
 
 export default props => {
 	const [album, updateResults] = React.useState(null)
@@ -13,21 +16,7 @@ export default props => {
 	React.useEffect(() => {
 		if(!props.match.params.id) return
 
-		fetch("/api/album", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				id: props.match.params.id,
-				entities: ["song"]
-			})
-		})
-		.then(res => res.json())
-		.then(res => {
-			if(res.status === 1) return res
-			throw res
-		})
+		api.album(props.match.params.id)
 		.then(res => updateResults(res.album))
 		.catch(err => {
 			setStatus(err.status)
@@ -35,14 +24,12 @@ export default props => {
 		})
 	}, [])
 
-	if(!props.match.params.id)
-		props.history.push("/")
-
 	if(album === null) return null
 	if(![-1, 1].includes(status))
 		return (
 			<div>
 				{album}
+				<Link to="/">Back home</Link>
 			</div>
 		)
 
@@ -52,7 +39,7 @@ export default props => {
 	}
 
 	return (
-		<Container>
+		<React.Fragment>
 			<Album.Info>
 				<div className="albumArt">
 					<img src={album.artwork.medium} alt="Album artwork" />
@@ -74,6 +61,6 @@ export default props => {
 					<Disc number={discNumber + 1} tracks={disc} />
 				)}
 			</div>
-		</Container>
+		</React.Fragment>
 	)
 }

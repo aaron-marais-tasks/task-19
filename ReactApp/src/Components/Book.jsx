@@ -7,6 +7,8 @@ import {Link} from "react-router-dom"
 
 import Container, * as Book from "./Styled/Book"
 
+import * as api from "../queryApi"
+
 export default props => {
 	const [results, updateResults] = React.useState(null)
 	const [status, setStatus] = React.useState(-1)
@@ -14,21 +16,7 @@ export default props => {
 	React.useEffect(() => {
 		if(!props.match.params.id) return
 
-		fetch("/api/book", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				id: props.match.params.id,
-				entities: ["song"]
-			})
-		})
-		.then(res => res.json())
-		.then(res => {
-			if(res.status === 1) return res
-			throw res
-		})
+		api.book(props.match.params.id)
 		.then(res => updateResults(res.book))
 		.catch(err => {
 			setStatus(err.status)

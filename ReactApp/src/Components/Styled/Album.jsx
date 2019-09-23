@@ -75,9 +75,3 @@ export const Disc = styled.div`
 		}
 	}
 `
-
-export default styled.div`
-	width: 80vw;
-	margin: 0 10vw;
-	min-height: 95vh;
-`

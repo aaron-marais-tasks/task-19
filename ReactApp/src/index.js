@@ -8,9 +8,9 @@ import { BrowserRouter } from "react-router-dom"
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faApple } from '@fortawesome/free-brands-svg-icons'
-import { faMinus, faPlus, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faMinus, faPlus, faChevronDown, faHeart } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faApple, faMinus, faPlus, faChevronDown)
+library.add(faApple, faMinus, faPlus, faChevronDown, faHeart)
 
 ReactDOM.render((
 	<BrowserRouter>

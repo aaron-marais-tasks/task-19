@@ -1,29 +1,67 @@
+/*
+  This file holds my core CSS
+*/
+
+/* App styling */
 .App {
+  /* Displayed as column flexbox */
   display: flex;
   flex-direction: column;
 
+  /* Height and width clamped */
   min-height: 100vh;
-
   max-width: 80vw;
+
+  /* 10vw margin left and right */
   margin: 0 10vw;
 }
 
+/* App body styling */
 .App > .body {
-  flex: 1;
+  /* Diplay as column flexbox */
   display: flex;
   flex-direction: column;
+
+  /* Allow container to grow */
+  flex-grow: 1;
+
+  /* 15px top/bottom 5px left/right margin */
   margin: 15px 5px;
 }
 
+/* If not loading, don't show loader */
+.App > .body:not(.loading) .loader {
+  display: none;
+}
+
+/* If loading, hide content */
+.App > .body.loading .loader ~ div {
+  display: none;
+}
+
+/* If loading, display loader */
+.App > .body.loading .loader {
+  /* Diplay as flexbox with items and content centered */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Allow container to grow */
+  flex-grow: 1;
+}
+
+/* Heart and apple default colors are black, with a .2s easing transition for hover */
 .fa-heart, .fa-apple {
-  color: black;
+  color: rgb(0,0,0);
   transition: color .2s ease-in-out;
 }
 
+/* On heart hover, change to hot pink */
 .fa-heart:hover {
   color: hotpink;
 }
 
+/* On apple hover, change to grey */
 .fa-apple:hover {
   color: grey;
 }

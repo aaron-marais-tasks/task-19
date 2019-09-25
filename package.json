@@ -12,7 +12,7 @@
     "Express": "npm run start --prefix ExpressApp",
     "start": "run-p -cn React Express",
     "dev:React": "npm run React",
-    "dev:Express": "cd ExpressApp && nodemon --exec \"npm start\"",
+    "dev:Express": "cd ExpressApp && nodemon --exec \"npm start\" --ignore \"favorites.json\"",
     "dev": "run-p -cn dev:*",
     "install:React": "cd ReactApp && npm install",
     "install:Express": "cd ExpressApp && npm install",

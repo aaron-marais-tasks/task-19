@@ -1,17 +1,29 @@
+/*
+	This file holds my styling for book view component
+*/
+
+// Import styled component library
 import styled from "styled-components"
 
+// Book info has a 15px left margin
 export const Info = styled.div`
 	margin-left: 15px;
 `
 
+// Head content container
 export const Head = styled.div`
-	flex: 1;
+	/* Flex grow as much as it wants */
+	flex-grow: 1;
+
+	/* Align text to right */
 	text-align: right;
 
+	/* Book title with a higher font size */
 	.albumTitle {
 		font-size: 36px;
 	}
 
+	/* Author name with a larger font size, and a "by" prefix */
 	.authorName {
 		font-size: 24px;
 
@@ -22,104 +34,54 @@ export const Head = styled.div`
 		}
 	}
 
+	/* Favorite heart */
 	.fa-heart {
 		cursor: pointer;
-		z-index: 5;
 
+		/* On hover or if favorited, color is red */
 		&:hover, &.favorite {
 			color: rgb(255,25,25);
 		}
 	}
 `
 
-export const Description = styled.div`
-	.title {
-		font-size: 30px;
-		flex: 1;
-		border-bottom: dashed 2px rgba(0,0,0,.5);
-		margin-bottom: 15px;
-	}
-
-	.line:not(:last-child) {
-		margin-bottom: 20px;
-
-		&.excerpt {
-			padding: 15px 15px 15px 45px;
-			background-color: lightgray;
-		}
-	}
-`
-
-export const Reviews = styled.div`
-	margin: 25px 0;
-
-	.title {
-		font-size: 30px;
-		flex: 1;
-		border-bottom: dashed 2px rgba(0,0,0,.5)
-	}
-
-	.review {
-		margin: 15px 0;
-
-		&:first-child {
-			margin-top: 0;
-		}
-
-		&:last-child {
-			margin-bottom: 0;
-		}
-
-		.content {
-			position: relative;
-			margin: 0 40px;
-
-			&:before, &:after {
-				position: absolute;
-				font-size: 76px;
-				opacity: .3;
-				line-height: 1;
-			}
-
-			&:before {
-				content: "“";
-				transform: translate(-40px, 0);
-				top: 0;
-				left: 0;
-			}
-
-			&:after {
-				content: "”";
-				transform: translate(40px, 0);
-				top: calc(100% - 25px);
-				right: 0;
-			}
-		}
-	}
-`
-
+// Book container
 export default styled.div`
+	/* Display as flex row */
 	display: flex;
 
+	/* Left bar (cover art, stars, genres, released) */
 	> .leftBar {
+		/* Set width */
 		width: 320px;
 
+		/* Displayed as a column flexbox, with centered items */
 		display: flex;
 		flex-direction: column;
-
 		align-items: center;
 
+		/* Cover art */
 		.coverArt {
+			/* Displayed as block */
 			display: block;
-			min-width: 320px;
+
+			/* Lowest width is 100% of parent with auto height */
+			min-width: 100%;
 			height: auto;
+
+			/* 20px bottom margin for stars */
 			margin-bottom: 20px;
 		}
 
+		/* Genre list */
 		.genres {
+			/* Align self to start of flex */
 			align-self: flex-start;
+
+			/* 25px left and right margin */
 			margin: 0 25px;
 
+			/* Each child div has dash before content */
 			> div:before {
 				content: "- ";
 			}

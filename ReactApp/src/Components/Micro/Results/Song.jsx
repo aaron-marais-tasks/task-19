@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 /*
 	This file holds my song result display
 */
@@ -20,6 +23,32 @@ export default props => {
 
 	// Whether or not book is a favorite
 	const [isFavorite, setFavorite] = React.useState(props.favorite)
+	// Whether or not audio is playing
+	const [isPlaying, setIsPlaying] = React.useState(false)
+
+	// Audio ref
+	let Audio = null
+
+	// Function to pause all <audio /> tags
+	const pauseAllAudio = e => {
+		for(const audio of document.getElementsByTagName("audio")) {
+			if((e && audio !== e.target && !audio.paused) || (!e && !audio.paused))
+				audio.pause()
+    	}
+	}
+
+	// When playing, pause all others
+	const playCallback = e => {
+		pauseAllAudio(e)
+		setIsPlaying(true)
+	}
+
+	const pauseCallback = e => {
+		setIsPlaying(false)
+	}
+	
+	// On unload, pause all audio
+	React.useEffect(() => pauseAllAudio, [])
 
 	/*
 		Callbacks
@@ -51,14 +80,10 @@ export default props => {
 		// Intermediate array for items
 		const items = []
 
-		// If art is requested, push artwork
-		if(attrList.includes("art"))
-			items.push(<Song.Artwork key={1} src={props.artwork.extraSmall} />)
-
 		// If title is requested, push track name
 		if(attrList.includes("title"))
 			items.push(
-				<Song.Entry key={2}>
+				<Song.Entry key={1}>
 					<div className="title">
 						Track name
 					</div>
@@ -71,7 +96,7 @@ export default props => {
 		// If artist is requested, push artist name
 		if(attrList.includes("artist"))
 			items.push(
-				<Song.Entry key={3}>
+				<Song.Entry key={2}>
 					<div className="title">
 						Artist
 					</div>
@@ -84,7 +109,7 @@ export default props => {
 		// If collection is specified, push album name and link
 		if(attrList.includes("collection"))
 			items.push(
-				<Song.Entry key={4}>
+				<Song.Entry key={3}>
 					<div className="title">
 						Collection
 					</div>
@@ -99,11 +124,31 @@ export default props => {
 		return items
 	}
 
+
 	/*
 		Rendering
 	*/
 	return (
 		<Song.Body>
+			{/* Preview song */}
+			<audio src={props.preview} ref={comp => {Audio = comp}}
+				onPlay={playCallback} onPause={pauseCallback}
+			/>
+			<Song.Artwork src={props.artwork.extraSmall}
+				onClick={() => {
+					{/* Pause if playing, or play if paused */}
+					if(isPlaying) {
+						Audio.pause()
+						setIsPlaying(false)
+					} else {
+						Audio.play()
+						setIsPlaying(true)
+					}
+				}}
+			>
+				<FontAwesomeIcon icon={isPlaying ? "pause" : "play"} />
+			</Song.Artwork>
+
 			{/* Generate content based on request property */}
 			{generateUsing(props.request)}
 

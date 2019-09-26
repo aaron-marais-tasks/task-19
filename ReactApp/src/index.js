@@ -17,8 +17,8 @@ import { BrowserRouter } from "react-router-dom"
 // Import font awesome and populate library
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faApple } from '@fortawesome/free-brands-svg-icons'
-import { faMinus, faPlus, faChevronDown, faHeart } from '@fortawesome/free-solid-svg-icons'
-library.add(faApple, faMinus, faPlus, faChevronDown, faHeart)
+import { faMinus, faPlus, faChevronDown, faHeart, faPlay, faPause } from '@fortawesome/free-solid-svg-icons'
+library.add(faApple, faMinus, faPlus, faChevronDown, faHeart, faPlay, faPause)
 
 ReactDOM.render((
 	<BrowserRouter>

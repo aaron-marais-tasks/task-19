@@ -59,6 +59,11 @@ export const Artwork = styled.div`
 	height: 50px;
 	width: 50px;
 
+	/* For preview, display as flex and align to center */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	/* 5px right padding */
 	padding-right: 5px;
 
@@ -68,4 +73,25 @@ export const Artwork = styled.div`
 	background-size: auto 100%;
 	background-position: center;
 	background-repeat: no-repeat;
+
+	/* Play button */
+	> svg {
+		/* Initial opacity of 0 */
+		opacity: 0;
+		width: 50% !important;
+		height: 50% !important;
+
+		/* Fill path with white, and have 20px black stroke */
+		> path {
+			fill: white;
+			stroke: black;
+			stroke-width: 20px;
+			stroke-linejoin: round;
+		}
+	}
+
+	&:hover > svg {
+		/* When hovering, set opacity to 1 */
+		opacity: 1;
+	}
 `

@@ -43,7 +43,9 @@ export default props => {
 				<div className="songList">
 					{props.tracks.map((item, key) => 
 						/* Display song and request title only */
-						<Song key={key} request={["title"]} {...item} />
+						<Song key={key} request={["title"]}
+							artwork={props.artwork} {...item}
+						/>
 					)}
 				</div>
 			)}

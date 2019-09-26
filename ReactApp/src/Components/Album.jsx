@@ -86,7 +86,9 @@ export default props => {
 			{/* Holds list of discs */}
 			<div>
 				{discs.map((disc, discNumber) => 
-					<Disc number={discNumber + 1} tracks={disc} />
+					<Disc artwork={album.artwork} number={discNumber + 1}
+						tracks={disc}
+					/>
 				)}
 			</div>
 		</React.Fragment>

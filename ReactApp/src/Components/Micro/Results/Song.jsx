@@ -124,7 +124,6 @@ export default props => {
 		return items
 	}
 
-
 	/*
 		Rendering
 	*/
@@ -136,7 +135,7 @@ export default props => {
 			/>
 			<Song.Artwork src={props.artwork.extraSmall}
 				onClick={() => {
-					{/* Pause if playing, or play if paused */}
+					/* Pause if playing, or play if paused */
 					if(isPlaying) {
 						Audio.pause()
 						setIsPlaying(false)

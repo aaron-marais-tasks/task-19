@@ -69,13 +69,62 @@ export const SearchBox = styled.form`
 			/* Transition color */
 			transition: color .2s ease-in-out;
 
-			/* Rotate by -45deg and scale 1.7x */
-			transform: rotate(-45deg) scale(1.7);
-
 			/* If submittable, color is black */
 			&.submittable {
 				color: rgb(0,0,0);
 			}
 		}
+	}
+`
+
+// Content search type
+export const Selections = styled.div`
+	/* Display as flex, wrap items, and have space around items */
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+	/* Half width of parent */
+	width: 45%;
+`
+
+// Custom checkbox
+export const Selection = styled.div`
+	/* Display as flexbox and center items */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	/* Static height */
+	height: 30px;
+
+	/* Pointer on hover */
+	cursor: pointer;
+
+	/* 10px padding and 5px border curve */
+	padding: 10px;
+	border-radius: 5px;
+
+	.select {
+		/* 5px right padding on checkbox */
+		padding-right: 5px;
+
+		/* 24px height on items */
+		height: 24px;
+	}
+
+	.text {
+		/* 24px height on items */
+		height: 24px;
+	}
+
+	/* When hovering, color is blue-green */
+	&:hover .select {
+		color: rgb(15, 79, 122);
+	}
+
+	/* When selected, color is light blue */
+	.fa-check-square {
+		color: rgb(10, 139, 230);
 	}
 `

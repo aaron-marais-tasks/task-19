@@ -6,8 +6,41 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
+// Import font awesome library
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+import Selection from "./Micro/Index/Selection"
+
 // Import styled components
 import * as Index from "./Styled/Index"
+
+const SELECTIONS = [
+	{
+		title: "Movies",
+		category: "movie"
+	}, {
+		title: "Podcasts",
+		category: "podcast"
+	}, {
+		title: "Music",
+		category: "music"
+	}, {
+		title: "Audiobooks",
+		category: "audiobook"
+	}, {
+		title: "Short films",
+		category: "shortFilm"
+	}, {
+		title: "TV shows",
+		category: "tvShow"
+	}, {
+		title: "Software",
+		category: "software"
+	}, {
+		title: "eBooks",
+		category: "ebook"
+	}
+]
 
 // Export functional component
 export default props => {
@@ -17,6 +50,8 @@ export default props => {
 
 	// Our search value
 	const [value, inputValue] = React.useState("")
+	// Search queries
+	const [queries, setQueries] = React.useState([])
 
 	/*
 		Callbacks
@@ -31,10 +66,26 @@ export default props => {
 		e.preventDefault()
 
 		if(value !== "")
-			props.onSubmit(value)
+			props.onSubmit(value, queries)
 	}
 
-	// Render index form
+	// When selections are made (added, removed)
+	const addToQuery = category => {
+		const query = [...queries]
+		query.push(category)
+		setQueries(query)
+	}
+
+	const removeFromQuery = category => {
+		const query = queries.filter(
+			query => query !== category
+		)
+		setQueries(query)
+	}
+
+	/*
+		Rendering
+	*/
 	return (
 		<React.Fragment>
 			{/* Global style to hide the header */}
@@ -50,11 +101,21 @@ export default props => {
 
 					{/* Submit button */}
 					<button type="submit">
-						<div className={"content" + (
+						<FontAwesomeIcon className={"content" + (
 							value !== "" ? " submittable" : ""
-						)}>⚲</div>
+						)} icon="search" />
 					</button>
 				</Index.SearchBox>
+
+				{/* Content selection */}
+				<Index.Selections>
+					{SELECTIONS.map((item, key) => 
+						<Selection key={key} {...item}
+							add={addToQuery.bind(null, item.category)}
+							remove={removeFromQuery.bind(null, item.category)}
+						/>
+					)}
+				</Index.Selections>
 
 				{/* View favorites if not wanting to search */}
 				<div className="favoriteView">

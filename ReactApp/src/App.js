@@ -9,6 +9,9 @@ import { Route, Switch, withRouter } from "react-router-dom"
 import { usePromiseTracker } from "react-promise-tracker"
 import ScaleLoader from 'react-spinners/ScaleLoader'
 
+// Import querystring module
+import queryString from "querystring"
+
 // Import base styling
 import "./App.css"
 
@@ -29,7 +32,7 @@ const App = props => {
   */
 
   // Our seach value input from header or index
-  const [searchValue, updateSearchValue] = React.useState("")
+  const [searchValue, updateSearchValue] = React.useState({})
 
   // Boolean if promise is in progress
   const { promiseInProgress } = usePromiseTracker()
@@ -39,9 +42,26 @@ const App = props => {
   */
 
   // Set up our searcher
-  const setupSearch = value => {
+  const setupSearch = (value, query) => {
+    if(query.length > 0) {
+      // Update our search value state item
+      updateSearchValue({
+        value,
+        query
+      })
+
+      const uriQuery = queryString.stringify({
+        query: query.join(";")
+      })
+
+      // Push the new search into history (redirect)
+      return props.history.push(`/search/${encodeURIComponent(value)}?${uriQuery}`)
+    }
+
     // Update our search value state item
-    updateSearchValue(value)
+    updateSearchValue({
+      value
+    })
 
     // Push the new search into history (redirect)
     props.history.push(`/search/${encodeURIComponent(value)}`)

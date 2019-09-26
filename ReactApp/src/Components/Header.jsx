@@ -44,10 +44,10 @@ export default props => {
 	React.useEffect(() => {
 		if(props.match.params && props.match.params.query) {
 			inputValue(decodeURIComponent(props.match.params.query))
-		} else if(props.value) {
-			inputValue(props.value)
+		} else if(props.value.value) {
+			inputValue(props.value.value)
 		}
-	}, [props.match.params, props.value])
+	}, [props.match.params, props.value.value])
 
 	// Render header
 	return (

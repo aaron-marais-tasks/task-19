@@ -42,6 +42,7 @@ export default props => {
 		else
 			promise = api.search(props.match.params.query)
 
+
 		trackPromise(promise)
 
 		// Update results when promise is successful.

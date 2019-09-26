@@ -29,12 +29,13 @@ const queryAppleApi = async (req, res) => {
 	// Build query with term, lang, entity, and limit keys
 	const query = queryString.stringify({
 		term: req.body.query,
+		entity: res.entities.join(","),
 		lang: "en_us",
 		limit: 200
 	})
 
 	// Wait for request from server and push into response
-	const request = await fetch(`https://itunes.apple.com/search?${query}&entity=ebook,song`)
+	const request = await fetch(`https://itunes.apple.com/search?${query}`)
 	res.result = await request.json()
 
 	return true

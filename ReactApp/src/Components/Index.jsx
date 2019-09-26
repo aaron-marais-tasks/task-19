@@ -23,7 +23,7 @@ const SELECTIONS = [
 		category: "podcast"
 	}, {
 		title: "Music",
-		category: "music"
+		category: "song"
 	}, {
 		title: "Audiobooks",
 		category: "audiobook"

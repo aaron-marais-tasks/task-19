@@ -34,7 +34,7 @@ export const fetchItem = (apiPath, body, opts={}) =>
 export const search = query =>
 	fetchItem("search", {
 		query,
-		entities: ["music", "ebook"]
+		entities: ["song", "ebook"]
 	})
 	.then(TO_JSON)
 	.then(VERIFY_RESULT)

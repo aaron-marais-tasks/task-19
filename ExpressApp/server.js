@@ -6,6 +6,7 @@
 const express = require("express")
 const bodyParser = require('body-parser')
 const fetch = require("node-fetch")
+const path = require("path")
 
 // List of methods for our API
 const methods = [
@@ -76,7 +77,18 @@ methods.forEach(method => {
 	}
 })
 
+// Use static HTML files for production
+if(process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "..", "ReactApp", "build")))
+
+	// The "catchall" handler: for any request that doesn't
+	// match one above, send back React's index.html file.
+	app.get('*', (req, res) => {
+	  res.sendFile(path.join(__dirname, "..", "ReactApp", "build", "index.html"))
+	})
+}
+
 // Start API server
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
 	console.log("Started express server on port 8080")
 })

@@ -14,7 +14,7 @@ import Selection from "./Micro/Index/Selection"
 // Import styled components
 import * as Index from "./Styled/Index"
 
-const SELECTIONS = [
+const SELECTIONS = process.env.NODE_ENV === "development" ? [
 	{
 		title: "Movies",
 		category: "movie"
@@ -36,6 +36,17 @@ const SELECTIONS = [
 	}, {
 		title: "Software",
 		category: "software"
+	}, {
+		title: "eBooks",
+		category: "ebook"
+	}
+] : [
+	{
+		title: "Podcasts",
+		category: "podcast"
+	}, {
+		title: "Music",
+		category: "song"
 	}, {
 		title: "eBooks",
 		category: "ebook"
@@ -93,34 +104,37 @@ export default props => {
 
 		  	{/* Hold index content */}
 			<Index.Content>
-				{/* Search form */}
-				<Index.SearchBox onSubmit={submitForm}>
-					{/* User input for search; value set in state */}
-					<input type="text" placeholder="Search"
-						value={value} onChange={updateInput} />
+				{/* Search items */}
+				<Index.Box>
+					{/* Search form */}
+					<Index.SearchBox onSubmit={submitForm}>
+						{/* User input for search; value set in state */}
+						<input type="text" placeholder="Search"
+							value={value} onChange={updateInput} />
 
-					{/* Submit button */}
-					<button type="submit">
-						<FontAwesomeIcon className={"content" + (
-							value !== "" ? " submittable" : ""
-						)} icon="search" />
-					</button>
-				</Index.SearchBox>
+						{/* Submit button */}
+						<button type="submit">
+							<FontAwesomeIcon className={"content" + (
+								value !== "" ? " submittable" : ""
+							)} icon="search" />
+						</button>
+					</Index.SearchBox>
 
-				{/* Content selection */}
-				<Index.Selections>
-					{SELECTIONS.map((item, key) => 
-						<Selection key={key} {...item}
-							add={addToQuery.bind(null, item.category)}
-							remove={removeFromQuery.bind(null, item.category)}
-						/>
-					)}
-				</Index.Selections>
+					{/* Content selection */}
+					<Index.Selections>
+						{SELECTIONS.map((item, key) => 
+							<Selection key={key} {...item}
+								add={addToQuery.bind(null, item.category)}
+								remove={removeFromQuery.bind(null, item.category)}
+							/>
+						)}
+					</Index.Selections>
+				</Index.Box>
 
 				{/* View favorites if not wanting to search */}
-				<div className="favoriteView">
+				<Index.Favorites>
 					or <Link to="/favorites">view your favorites</Link>
-				</div>
+				</Index.Favorites>
 			</Index.Content>
 		</React.Fragment>
 	)

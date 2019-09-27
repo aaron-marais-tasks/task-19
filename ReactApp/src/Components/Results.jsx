@@ -9,9 +9,13 @@ import React from "react"
 import { trackPromise } from 'react-promise-tracker'
 import { Link } from "react-router-dom"
 
+// Import query string parser
+import queryString from "querystring"
+
 // Import my song list and book components
+import PodcastList from "./Micro/Results/Podcast"
 import SongList from "./Micro/Results/SongList"
-import BookBody from "./Micro/Results/Book"
+import BookList from "./Micro/Results/Book"
 
 // Import API methods
 import * as api from "../queryApi"
@@ -39,9 +43,14 @@ export default props => {
 		// If favorites, get list; if not favorites, get by search query
 		if(props.favorites)
 			promise = api.favorite.list()
-		else
-			promise = api.search(props.match.params.query)
+		else {
+			// Slice search query
+			const slicedQuery = props.location.search.slice(1)
+			const query = queryString.parse(slicedQuery)
 
+			// Query search API
+			promise = api.search(props.match.params.query, query.query.split(","))
+		}
 
 		trackPromise(promise)
 
@@ -66,7 +75,7 @@ export default props => {
 		results === null || (!props.match.params.query)
 	)) return null
 
-	// If status is not -1 or 1, dsplay the error message
+	// If status is not -1 or 1, display the error message
 	if(![-1, 1].includes(status)) {
 		return (
 			<React.Fragment>
@@ -77,7 +86,7 @@ export default props => {
 	}
 
 	// If neither song nor ebook exist in results, display no results found
-	if(!results.song && !results.ebook) {
+	if(!results.song && !results.ebook && !results.podcast) {
 		return (
 			<React.Fragment>
 				No results found
@@ -85,11 +94,14 @@ export default props => {
 		)
 	}
 
+	console.log(results)
+
 	// Render song list and ebook list
 	return (
 		<React.Fragment>
+			<BookList ebooks={results.ebook} />
 			<SongList songs={results.song} />
-			<BookBody ebooks={results.ebook} />
+			<PodcastList podcasts={results.podcast} />
 		</React.Fragment>
 	)
 }

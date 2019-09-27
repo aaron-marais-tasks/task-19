@@ -89,7 +89,7 @@ const buildResult = (req, res) => {
 					album: {
 						id: item.collectionId,
 						name: item.collectionName,
-						explicit: item.collectionExplicitness === "notExplicit" ? false : true,
+						explicit: item.collectionExplicitness === "explit",
 						discs: item.discCount,
 						tracks: item.trackCount
 					},
@@ -124,12 +124,29 @@ const buildResult = (req, res) => {
 						id: item.artistId
 					}
 				}
+
+			case "podcast":
+				return {
+					id: item.collectionId,
+					favorite: res.favorites.includes(item.collectionId),
+					kind: item.kind,
+					title: item.collectionName,
+					explicit: item.collectionExplicitness === "explit",
+					genres: item.genres,
+					recordedCount: item.trackCount,
+					artwork: artworks,
+					artist: {
+						name: item.artistName
+					}
+				}
 		}
 	})
 
 	// Build a list of results from items
 	const listOfResults = {}
 	for(const item of items) {
+		if(!item) continue
+
 		// If kind exists in list, populate that, else new array
 		const list = listOfResults[item.kind] || []
 		

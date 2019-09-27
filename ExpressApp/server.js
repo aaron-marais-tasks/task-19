@@ -15,6 +15,7 @@ const methods = [
 	require("./methods/favorite.delete.js"),
 	require("./methods/search.js"),
 	require("./methods/album.js"),
+	require("./methods/podcast.js"),
 	require("./methods/book.js")
 ]
 
@@ -32,7 +33,7 @@ app.use((err, req, res, next) => {
 // Use a router for API
 const route = express.Router()
 
-// Allow router to parse JSON from body
+// Allow router to parse JSON and XML from body
 route.use(bodyParser.json())
 
 // /api root

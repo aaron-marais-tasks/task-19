@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 // Import React into script scope, as well as promise tracker,
-// font awesome, router link, react html parser, and star ratings libraries
+// font awesome, react html parser, and star ratings libraries
 import React from "react"
 import { trackPromise } from 'react-promise-tracker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link } from "react-router-dom"
 import parseHtml from 'html-react-parser'
 import StarRatings from 'react-star-ratings'
 
@@ -76,12 +75,11 @@ export default props => {
 	// Render null if no results
 	if(results === null) return null
 
-	// Render error and l ink to home if status not -1 or 1
+	// Render error if status not -1 or 1
 	if(![-1, 1].includes(status))
 		return (
 			<React.Fragment>
 				{results}
-				<Link to="/">Back home</Link>
 			</React.Fragment>
 		)
 

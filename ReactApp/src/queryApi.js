@@ -31,13 +31,15 @@ export const fetchItem = (apiPath, body, opts={}) =>
 // Export search
 // Uses fetchItem to fetch /api/search, queries for music and ebooks, then converts to json and verifies
 // Returns a promise
-export const search = query =>
-	fetchItem("search", {
-		query,
-		entities: ["song", "ebook"]
-	})
-	.then(TO_JSON)
-	.then(VERIFY_RESULT)
+export const search = (query, entities) => {
+	console.log(entities)
+	return fetchItem("search", {
+			query,
+			entities: entities.length > 0 ? entities : ["song", "ebook"]
+		})
+		.then(TO_JSON)
+		.then(VERIFY_RESULT)
+}
 
 // Export book
 // Uses fetchItem to fetch /api/book, queries using book ID, then converts to json and verifies
@@ -56,6 +58,17 @@ export const album = id =>
 	fetchItem("album", {
 		id: id,
 		entities: ["song"]
+	})
+	.then(TO_JSON)
+	.then(VERIFY_RESULT)
+
+// Export podcast
+// Uses fetchItem to fetch /api/podcast, queries using podcast ID for episodes, then converts to json and verifies
+// Returns a promise
+export const podcast = id => 
+	fetchItem("podcast", {
+		id: id,
+		entities: ["podcast"]
 	})
 	.then(TO_JSON)
 	.then(VERIFY_RESULT)

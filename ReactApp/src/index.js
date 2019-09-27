@@ -23,12 +23,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
-	faSquare, faCheckSquare
+	faSquare, faCheckSquare, faClock, faCalendarPlus
 } from '@fortawesome/free-regular-svg-icons'
 
 library.add(
 	faApple, faMinus, faPlus, faChevronDown, faHeart,
-	faPlay, faPause, faSearch, faSquare, faCheckSquare
+	faPlay, faPause, faSearch, faSquare, faCheckSquare,
+	faClock, faCalendarPlus
 )
 
 ReactDOM.render((

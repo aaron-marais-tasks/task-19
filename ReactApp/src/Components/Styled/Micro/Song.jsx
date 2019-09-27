@@ -53,8 +53,13 @@ export const Entry = styled.div`
 	}
 `
 
-// Song artwork
-export const Artwork = styled.div`
+// Song artwork; use styled attrs to avoid re-creating
+// hundreds of classes
+export const Artwork = styled.div.attrs(({src}) => ({
+	style: {
+		backgroundImage: `url(${src})`
+	}
+}))`
 	/* Set width and height to 50px */
 	height: 50px;
 	width: 50px;
@@ -69,7 +74,6 @@ export const Artwork = styled.div`
 
 	/* Background image from props, size is auto width 100% height,
 		centered with no repeat */
-	background-image: url(${props => props.src});
 	background-size: auto 100%;
 	background-position: center;
 	background-repeat: no-repeat;

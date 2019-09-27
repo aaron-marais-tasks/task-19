@@ -49,6 +49,15 @@ export const SiteSearch = styled.div`
 		cursor: pointer;
 	}
 
+	> a {
+		text-decoration: none;
+		color: rgb(9, 157, 120);
+
+		&:hover {
+			color: rgb(9, 120, 142);
+		}
+	}
+
 	/* Input box */
 	input {
 		/* Height of box is 25px */

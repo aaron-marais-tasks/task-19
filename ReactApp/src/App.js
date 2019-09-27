@@ -25,6 +25,7 @@ import Index from "./Components/Index"
 import Results from "./Components/Results"
 import Album from "./Components/Album"
 import Book from "./Components/Book"
+import Podcast from "./Components/Podcast"
 
 const App = props => {
   /*
@@ -87,7 +88,7 @@ const App = props => {
           />
         </div>
 
-        {/* Router switch; betweeen favorites, search, album, book, and index */}
+        {/* Router switch; betweeen favorites, search, album, book, podcast, and index */}
         <Switch location={props.location}>
           {/* Favorites route is similar to search results from API; render the
               Results component */}
@@ -96,6 +97,7 @@ const App = props => {
           <Route path="/search/:query" component={Results} />
           <Route path="/album/:id" component={Album} />
           <Route path="/book/:id" component={Book} />
+          <Route path="/podcast/:id" component={Podcast} />
           <Route exact path="/" render={() => <Index onSubmit={setupSearch} />} />
           <Route component={FourOhFour} />
         </Switch>

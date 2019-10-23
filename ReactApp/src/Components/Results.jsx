@@ -20,6 +20,8 @@ import BookList from "./Micro/Results/Book"
 // Import API methods
 import * as api from "../queryApi"
 
+export const ResultContext = React.createContext(null)
+
 // Export functional component
 export default props => {
 	/*
@@ -30,6 +32,10 @@ export default props => {
 	const [status, setStatus] = React.useState(-1)
 	// Holds results from API
 	const [results, updateResults] = React.useState(null)
+	// Current tab
+	const [currentTab, setCurrentTab] = React.useState(0)
+	// List of tabs available
+	const [tabList, setTabList] = React.useState([])
 
 	/*
 		Functional hooks
@@ -97,9 +103,26 @@ export default props => {
 	// Render song list and ebook list
 	return (
 		<React.Fragment>
-			<BookList ebooks={results.ebook} />
-			<SongList songs={results.song} />
-			<PodcastList podcasts={results.podcast} />
+			{
+				tabList.map(tab => (
+					<div onClick={() => setCurrentTab(tab.id)}>
+						{tab.name}
+					</div>
+				))
+			}
+			<ResultContext.Provider value={{
+				registerTab: (id, name) => {
+					const tabs = [...tabList]
+					tabs.push({id, name})
+					setTabList(tabs)
+					if(currentTab === 0) setCurrentTab(id)
+				},
+				tabList, currentTab
+			}}>
+				<BookList id={1} ebooks={results.ebook} />
+				<SongList id={2} songs={results.song} />
+				<PodcastList id={3} podcasts={results.podcast} />
+			</ResultContext.Provider>
 		</React.Fragment>
 	)
 }

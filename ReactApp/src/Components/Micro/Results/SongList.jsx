@@ -11,6 +11,7 @@ import AuthorGroup from "./AuthorGroup"
 
 // Import styled component
 import {SongList} from "../../Styled/Results"
+import {ResultContext} from "../../Results"
 
 export default props => {
 	/*
@@ -19,6 +20,8 @@ export default props => {
 
 	// Amount of artists being displayed
 	const [countArtist, updateCountArtist] = React.useState(25)
+
+	const ctx = React.useContext(ResultContext)
 	
 	/*
 		Callbacks, logic
@@ -29,6 +32,9 @@ export default props => {
 
 	// If no songs returned, render null
 	if(!props.songs) return null
+
+	if(ctx.tabList.filter(tab => tab.id === props.id).length === 0)
+		ctx.registerTab(props.id, "Songs")
 
 	// Loop over all songs, filter songs by artist, and add into artist array
 	// eslint-disable-next-line
@@ -60,7 +66,7 @@ export default props => {
 	/*
 		Rendering
 	*/
-	return (
+	return ctx.currentTab !== props.id ? null : (
 		<SongList>
 			{/* Slice-copy songs by artist into sections of 25 */}
 			{/* Map over sliced array andd assign into author groups */}

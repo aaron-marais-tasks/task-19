@@ -14,6 +14,7 @@ import BookBody, * as Book from "../../Styled/Micro/Book"
 
 // Import API helper
 import * as api from "../../../queryApi.js"
+import {ResultContext} from "../../Results"
 
 // Export named component
 export const Item = props => {
@@ -84,18 +85,17 @@ export const Item = props => {
 export default props => {
 	// If no ebooks, render null
 	if(!props.ebooks) return null
+	const ctx = React.useContext(ResultContext)
 
-	return (
+	if(ctx.tabList.filter(tab => tab.id === props.id).length === 0)
+		ctx.registerTab(props.id, "Books")
+
+	return ctx.currentTab !== props.id ? null : (
 		<BookBody>
-			{/* Using 2 buffers to provide spacing on left and right of scroll */}
-			<div className="buffer" />
-
 			{/* Loop over ebooks and map them to components */}
 			{props.ebooks.map((item, key) =>
 				<Item key={key} {...item} />
 			)}
-			
-			<div className="buffer" />
 		</BookBody>
 	)
 }

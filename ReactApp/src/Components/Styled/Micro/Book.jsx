@@ -9,15 +9,15 @@ import styled from "styled-components"
 export const Artwork = styled.div`
 	/* Fixed height and width */
 	height: 250px;
-	width: 150px;
-	min-width: 150px;
+	width: calc((80vw / 6) - 25px);
+	min-width: calc((80vw / 6) - 25px);
 
 	/* Hide overflow and set position to relative */
 	overflow: hidden;
 	position: relative;
 
-	/* 10px left and right margin */
-	margin: 0 10px;
+	/* 10px margins */
+	margin: 10px;
 
 	/* Background image from props, size is auto width 100% height,
 		centered with no repeat */
@@ -121,24 +121,16 @@ export const Body = styled.div`
 export default styled.div`
 	/* Display as flexbox */
 	display: flex;
+	flex-wrap: wrap;
 
 	/* 25px bottom margin */
 	margin-bottom: 25px;
 
-	/* Auto overflow on X axis */
-	overflow-x: auto;
-	
 	/* If primary cursor is coarse (mobile device) remove scrollbar */
 	@media (pointer: coarse) {
 		scrollbar-width: none;
 		::-webkit-scrollbar {
 			display: none;
 		}
-	}
-
-	/* Buffers have a set width and height */
-	.buffer {
-		min-width: 10px;
-		min-height: 250px;
 	}
 `

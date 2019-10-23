@@ -12,6 +12,8 @@ import { Link } from "react-router-dom"
 // Import query string parser
 import queryString from "querystring"
 
+import Tabs, {Tab} from "./Styled/Micro/Tabs"
+
 // Import my song list and book components
 import PodcastList from "./Micro/Results/Podcast"
 import SongList from "./Micro/Results/SongList"
@@ -103,13 +105,18 @@ export default props => {
 	// Render song list and ebook list
 	return (
 		<React.Fragment>
-			{
-				tabList.map(tab => (
-					<div onClick={() => setCurrentTab(tab.id)}>
-						{tab.name}
-					</div>
-				))
-			}
+			<Tabs>
+				{
+					tabList.map(tab => (
+						<Tab
+							style={currentTab === tab.id ? {backgroundColor: "lightgreen"} : {}}
+							onClick={() => setCurrentTab(tab.id)}
+						>
+							{tab.name}
+						</Tab>
+					))
+				}
+			</Tabs>
 			<ResultContext.Provider value={{
 				registerTab: (id, name) => {
 					const tabs = [...tabList]

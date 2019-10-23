@@ -49,7 +49,7 @@ export default props => {
 			const query = queryString.parse(slicedQuery)
 
 			// Query search API
-			promise = api.search(props.match.params.query, query.query.split(","))
+			promise = api.search(props.match.params.query, query.query ? query.query.split(",") : [])
 		}
 
 		trackPromise(promise)
@@ -93,8 +93,6 @@ export default props => {
 			</React.Fragment>
 		)
 	}
-
-	console.log(results)
 
 	// Render song list and ebook list
 	return (
